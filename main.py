@@ -32,18 +32,19 @@ def main():
     # パイプラインの初期化
     model_id = "runwayml/stable-diffusion-inpainting"  # インペインティング専用モデル
     try:
-        pipe = StableDiffusionInpaintPipeline.from_pretrained(
-            model_id,
-            torch_dtype=torch.float16,
-            use_auth_token="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",
-        ).to("cuda")
+        pipe: StableDiffusionInpaintPipeline = (
+            StableDiffusionInpaintPipeline.from_pretrained(
+                model_id,
+                torch_dtype=torch.float16,
+                use_auth_token="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",
+            ).to("cuda")
+        )
 
         # テキストの反転埋め込みをロード
         try:
             pipe.load_textual_inversion(
                 pretrained_model_name_or_path="sd-concepts-library/armando-reveron-style",
                 token="embedding",
-                textual_inversion_strength=100
             )
             print("埋め込みが正常にロードされました。")
         except Exception as e:
@@ -68,7 +69,7 @@ def main():
             image=base_image,
             mask_image=mask_image,
             num_inference_steps=50,  # ステップ数の調整
-            guidance_scale=7.5,  # ガイダンススケールの調整
+            guidance_scale=15,  # ガイダンススケールの調整
         ).images[0]
 
         # 生成された画像を元の画像サイズにリサイズ
