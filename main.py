@@ -18,9 +18,9 @@ def main():
         raise ValueError("HUGGINGFACE_HUB_TOKEN 環境変数が設定されていません。")
 
     # ベース画像とマスク画像のパス
-    base_image_path = "room2.png"
-    mask_image_path = "mask.png"
-    output_image_path = "./inpainted_image.png"
+    base_image_path = "input/room.png"
+    mask_image_path = "input/mask.png"
+    output_image_path = "output/inpainted_image.png"
 
     # 画像の読み込み
     try:
@@ -41,8 +41,9 @@ def main():
         # テキストの反転埋め込みをロード
         try:
             pipe.load_textual_inversion(
-                pretrained_model_name_or_path="sd-concepts-library/gta5-artwork",
+                pretrained_model_name_or_path="sd-concepts-library/armando-reveron-style",
                 token="embedding",
+                textual_inversion_strength=100
             )
             print("埋め込みが正常にロードされました。")
         except Exception as e:
@@ -52,8 +53,8 @@ def main():
         raise RuntimeError(f"パイプラインの初期化に失敗しました: {e}")
 
     # プロンプトの設定
-    prompt = "white and black tyle floor embedding"
-    negative_prompt = "low quality, blurry, unrealistic"
+    prompt = "floor of embedding"
+    negative_prompt = "low quality, blurry, unrealistic, less detailed"
 
     # 生成の設定
     seed = 10000
