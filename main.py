@@ -43,7 +43,7 @@ def main():
         # テキストの反転埋め込みをロード
         try:
             pipe.load_textual_inversion(
-                pretrained_model_name_or_path="sd-concepts-library/armando-reveron-style",
+                pretrained_model_name_or_path="sd-concepts-library/azura-from-vibrant-venture",
                 token="embedding",
             )
             print("埋め込みが正常にロードされました。")
